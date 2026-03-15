@@ -5,11 +5,8 @@ import org.junit.jupiter.api.Test;
 import ru.netology.data.DataHelper;
 import ru.netology.db.DbUtils;
 import ru.netology.page.LoginPage;
-import ru.netology.page.VerificationPage;
-
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 
 class BankLoginTest {
     @AfterAll
@@ -19,30 +16,25 @@ class BankLoginTest {
 
     @Test
     void shouldLoginUsingCodeFromDb() {
-
         var authInfo = DataHelper.getValidAuthInfo();
+        var loginPage = open("http://localhost:9999", LoginPage.class);
+        var verificationPage = loginPage.validLogin(authInfo);
 
-        LoginPage loginPage = open("http://localhost:9999", LoginPage.class);
 
-        VerificationPage verificationPage = loginPage.validLogin(authInfo);
-
-        String code = DbUtils.getAuthCode(authInfo.getLogin());
-
+        var code = DbUtils.getAuthCode(authInfo.getLogin());
         verificationPage.validVerify(code);
     }
 
     @Test
     void shouldBlockUserAfterThreeInvalidPasswordAttempts() {
-
         var invalidAuth = DataHelper.getInvalidAuthInfo();
+        var loginPage = open("http://localhost:9999", LoginPage.class);
 
         for (int i = 0; i < 3; i++) {
-            LoginPage loginPage = open("http://localhost:9999", LoginPage.class);
             loginPage.invalidLogin(invalidAuth);
         }
 
-        String status = DbUtils.getUserStatus(invalidAuth.getLogin());
-
+        var status = DbUtils.getUserStatus(invalidAuth.getLogin());
         assertEquals("blocked", status);
     }
 }

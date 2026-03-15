@@ -15,7 +15,7 @@ public class DataHelper {
     }
 
     public static AuthInfo getValidAuthInfo() {
-        // Проверьте пароль: в этой задаче часто используется "pass" вместо "qwerty123"
+
         return new AuthInfo("vasya", "qwerty123");
     }
 
@@ -37,7 +37,7 @@ public class DataHelper {
         String password;
     }
 
-    // Этот класс ОБЯЗАТЕЛЬНО должен быть здесь, чтобы SQLHelper его видел
+
     @Data
     @NoArgsConstructor
     @AllArgsConstructor

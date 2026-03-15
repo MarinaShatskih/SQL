@@ -12,7 +12,6 @@ public class VerificationPage {
 
     public VerificationPage() {
         codeField.shouldBe(Condition.visible);
-        $("[data-test-id=code] input").shouldBe(visible, java.time.Duration.ofSeconds(15));
     }
 
 
